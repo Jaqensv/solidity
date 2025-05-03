@@ -7,7 +7,6 @@ contract MiniVault {
     address public owner;
     
     constructor(uint8 _interest) {
-        require(msg.sender == tx.origin);
         owner = msg.sender;
         require(_interest <= 100, "Interest too high");
         interest = _interest;
