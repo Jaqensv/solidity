@@ -5,10 +5,10 @@ contract StakingPool {
     // The pool ables to reward the users
     uint256 public pool;
     uint256 public rewardPerMinuteMultiplier;
-    uint256 public scale = 100;
-    address public owner;
-    mapping(address => uint256) public userStake;
-    mapping(address => uint256) public userInitialStakeTime;
+    uint256 private constant scale = 100;
+    address private owner;
+    mapping(address => uint256) private userStake;
+    mapping(address => uint256) private userInitialStakeTime;
 
     event Staked(address indexed user, uint256 indexed initialStakeTime, uint256 indexed value);
     event RewardMultiplierChanged(uint256 indexed rewardMultiplier);
@@ -25,6 +25,18 @@ contract StakingPool {
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
+    }
+
+    function getOwner() external view returns (address) {
+        return owner;
+    }
+
+    function getMyStake() external view returns (uint256) {
+        return userStake[msg.sender];
+    }
+
+    function getMyStakeTime() external view returns (uint256) {
+        return userInitialStakeTime[msg.sender];
     }
 
     // A pool contributor can be any external user
