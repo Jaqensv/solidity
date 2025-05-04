@@ -46,7 +46,6 @@ contract StakingPool {
         return a * (((b - c) * d) / e);
     }
 
-    // Address as an argument suggested in the subject seems to be useless here. Using msg.sender might be correct.
     function getPendingReward() external view returns (uint256) {
         require(userStake[msg.sender] > 0, "Stake is empty");
         return _rewardCalculation(userStake[msg.sender], block.timestamp, userInitialStakeTime[msg.sender], rewardPerMinuteMultiplier, scale);
