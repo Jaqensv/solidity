@@ -2,9 +2,9 @@
 pragma solidity ^0.8.24;
 
 contract MiniVault {
-    mapping(address => uint256) public userBalances;
+    mapping(address => uint256) private userBalances;
     uint8 public interest;
-    address public owner;
+    address private owner;
     
     constructor(uint8 _interest) {
         owner = msg.sender;
@@ -15,6 +15,14 @@ contract MiniVault {
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
+    }
+
+    function getOwner() external view returns (address) {
+        return owner;
+    }
+
+    function getMyBalance() external view returns (uint256) {
+        return userBalances[msg.sender];
     }
 
     function interestModifier(uint8 _newInterest) external onlyOwner() {
